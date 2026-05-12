@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Carlos Juárez · Bilingual Business Operator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #070c1a;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.10);
+    --text: #e8edf5;
+    --text-dim: #8a94a8;
+    --cyan: #00e5ff;
+    --blue: #3b82f6;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --purple: #a855f7;
+    --gold: #fbbf24;
+    --crimson: #dc2626;
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -20%;
+    width: 80%; height: 80%;
+    background: radial-gradient(circle, rgba(0,229,255,0.10) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%; right: -20%;
+    width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 28px 100px;
+    z-index: 1;
+  }
+  .hero {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .hero .name-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid rgba(0,229,255,0.30);
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 26px;
+    background: rgba(0,229,255,0.05);
+  }
+  .hero h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #00e5ff 50%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .hero .role {
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .hero .tagline {
+    color: var(--text-dim);
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.0rem;
+  }
+  .hero .meta {
+    margin-top: 26px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hero .meta span {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 5px 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+  }
+  .hero .meta strong { color: var(--text); }
+
+  .section-label {
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .section-title {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--text);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 70px;
+  }
+  .work-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 30px;
+    align-items: center;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .work-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(0,229,255,0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .work-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,229,255,0.40);
+  }
+  .work-card:hover::before { opacity: 1; }
+  @media (max-width: 800px) {
+    .work-card { grid-template-columns: 1fr; }
+    .work-card .preview { order: -1; }
+  }
+  .work-card .body {
+    position: relative;
+  }
+  .work-card .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .work-card .tag.ops { background: rgba(0,229,255,0.12); color: var(--cyan); }
+  .work-card .tag.dashboard { background: rgba(168,85,247,0.12); color: var(--purple); }
+  .work-card .tag.research { background: rgba(251,191,36,0.12); color: var(--gold); }
+  .work-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .work-card .desc {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .work-card .tech {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .work-card .tech span {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+  }
+  .work-card .cta {
+    color: var(--cyan);
+    font-size: 0.92rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .work-card .cta::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+  .work-card:hover .cta::after { transform: translateX(4px); }
+  .work-card .preview {
+    position: relative;
+  }
+  .work-card .preview-box {
+    border-radius: 12px;
+    padding: 26px 18px;
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .work-card .preview-box.ops {
+    background: linear-gradient(135deg, rgba(0,229,255,0.10), rgba(59,130,246,0.05));
+    border: 1px solid rgba(0,229,255,0.25);
+  }
+  .work-card .preview-box.dashboard {
+    background: linear-gradient(135deg, rgba(168,85,247,0.10), rgba(236,72,153,0.05));
+    border: 1px solid rgba(168,85,247,0.25);
+  }
+  .work-card .preview-box.research {
+    background: linear-gradient(135deg, rgba(251,191,36,0.10), rgba(220,38,38,0.05));
+    border: 1px solid rgba(251,191,36,0.25);
+  }
+  .preview-box .preview-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+  .preview-box .preview-stat {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.0;
+  }
+  .preview-box .preview-stat-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+
+  /* CAPABILITIES */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 70px;
+  }
+  .cap-card {
+    padding: 22px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+  }
+  .cap-card h4 {
+    font-size: 0.92rem;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .cap-card p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* CONTACT */
+  .contact {
+    text-align: center;
+    padding: 50px 28px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.06), rgba(168,85,247,0.04));
+    border: 1px solid rgba(0,229,255,0.20);
+    border-radius: 20px;
+  }
+  .contact h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .contact p {
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+  .contact .links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .contact .links a {
+    padding: 10px 20px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .contact .links a:hover {
+    background: rgba(0,229,255,0.10);
+    border-color: rgba(0,229,255,0.40);
+    color: var(--cyan);
+  }
+  .contact .primary {
+    background: linear-gradient(135deg, var(--cyan), var(--blue)) !important;
+    color: #000 !important;
+    border-color: transparent !important;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2.0rem; }
+    .container { padding: 50px 18px 60px; }
+    .work-card { padding: 26px; }
+    .work-card h3 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="name-badge">Portfolio · Selected Work · 2026</div>
+  <h1>Carlos Juárez</h1>
+  <div class="role">Bilingual Business Operator (EN↔ES) · Cross-Border Operations</div>
+  <p class="tagline">I help U.S. founders, agencies, and growing businesses operate cleanly across Spanish-speaking markets — interpretation, customer operations, market research, and the kind of structured analytical work that needs both bilingual capability and business judgment.</p>
+  <div class="meta">
+    <span><strong>Based:</strong> Guadalajara, MX</span>
+    <span><strong>Available:</strong> U.S. time zones</span>
+    <span><strong>Languages:</strong> EN (C1) · ES (Native MX)</span>
+    <span><strong>5+ years</strong> U.S. customer operations</span>
+  </div>
+</header>
+
+<!-- WORK -->
+<div class="section-label">Selected Work</div>
+<h2 class="section-title">3 cases — full deliverables, not snippets</h2>
+
+<div class="work-grid">
+
+  <a href="01_cs_playbook.html" class="work-card">
+    <div class="body">
+      <span class="tag ops">Operations · CS Playbook</span>
+      <h3>AI-Augmented Customer Support Playbook</h3>
+      <p class="desc">A complete operating model for running 100-150 daily tickets with AI as a force multiplier — tiered support framework, response templates with verbatim examples (EN/ES), workflow diagram, KB structure, and quality control guardrails.</p>
+      <div class="tech">
+        <span>Tiered support</span>
+        <span>AI workflow</span>
+        <span>Templates EN/ES</span>
+        <span>KB structure</span>
+        <span>QC playbook</span>
+      </div>
+      <span class="cta">Open the playbook</span>
+    </div>
+    <div class="preview">
+      <div class="preview-box ops">
+        <div class="preview-icon">⚙️</div>
+        <div>
+          <div class="preview-stat">130/day</div>
+          <div class="preview-stat-label">tickets baseline</div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a href="02_cs_dashboard.html" class="work-card">
+    <div class="body">
+      <span class="tag dashboard">Reporting · Operations Dashboard</span>
+      <h3>Customer Support Operations Dashboard</h3>
+      <p class="desc">The daily report I'd send your leadership — KPI cards (CSAT, FRT, ART, SLA), volume charts, tier distribution, top recurring issues, team performance, open escalations to engineering, and an AI-assistance footprint with human-override transparency.</p>
+      <div class="tech">
+        <span>Daily KPIs</span>
+        <span>Volume charts</span>
+        <span>SLA tracking</span>
+        <span>Team perf</span>
+        <span>Esc. visibility</span>
+      </div>
+      <span class="cta">View the live dashboard</span>
+    </div>
+    <div class="preview">
+      <div class="preview-box dashboard">
+        <div class="preview-icon">📊</div>
+        <div>
+          <div class="preview-stat">93%</div>
+          <div class="preview-stat-label">CSAT · target 90%</div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+  <a href="03_market_entry_japan.html" class="work-card">
+    <div class="body">
+      <span class="tag research">Research · Market Entry Feasibility</span>
+      <h3>Premium Tequila Export Feasibility: México → Tokyo</h3>
+      <p class="desc">Full 30-page cross-border feasibility analysis — FX parity modeling (MXN/JPY/USD), competitor pricing benchmark, AAE 2005 trade-agreement implications, CIF Yokohama logistics breakdown, distributor mapping, and prioritized strategic recommendations. APA 7th referenced.</p>
+      <div class="tech">
+        <span>FX modeling</span>
+        <span>Pricing strategy</span>
+        <span>Logistics cost</span>
+        <span>Trade agreements</span>
+        <span>APA citations</span>
+      </div>
+      <span class="cta">Read the case study</span>
+    </div>
+    <div class="preview">
+      <div class="preview-box research">
+        <div class="preview-icon">🌏</div>
+        <div>
+          <div class="preview-stat">$54.9K</div>
+          <div class="preview-stat-label">CIF Yokohama · 6,720 bottles</div>
+        </div>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- CAPABILITIES -->
+<div class="section-label">What I bring</div>
+<h2 class="section-title">Capabilities</h2>
+
+<div class="capabilities-grid">
+  <div class="cap-card">
+    <h4>Bilingual operations</h4>
+    <p>Native Mexican Spanish, C1 English. Live interpretation, document translation, cultural mediation — currently delivering for U.S. clients in utility, medical, legal, and insurance sectors.</p>
+  </div>
+  <div class="cap-card">
+    <h4>Customer ops &amp; CRM</h4>
+    <p>5+ years front-line CS at Comcast, Cognizant (Onboarding Supervisor — managed cohorts), and Avantive Solutions. Salesforce, KPI ownership, retention, escalation handling.</p>
+  </div>
+  <div class="cap-card">
+    <h4>AI-augmented workflow</h4>
+    <p>AI as a force multiplier, not a replacement for judgment. Drafts reviewed, personalized, and curated by a human before any customer interaction. 42% human-override rate is the point.</p>
+  </div>
+  <div class="cap-card">
+    <h4>Cross-border research</h4>
+    <p>International business analysis, competitive landscapes, FX-aware pricing models, logistics cost engineering, regulatory mapping. APA-cited rigor on every deliverable.</p>
+  </div>
+  <div class="cap-card">
+    <h4>Operational follow-through</h4>
+    <p>Process documentation, workflow design, daily reporting, escalation discipline. The unglamorous part that keeps systems actually running at scale.</p>
+  </div>
+  <div class="cap-card">
+    <h4>Founder/SMB orientation</h4>
+    <p>I understand that founders need execution, not just analysis. Every deliverable comes with a recommendation and a clear next step — no walls of insight without action.</p>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact">
+  <h2>Available for cross-border projects</h2>
+  <p>Bilingual support operations · interpretation · market research · customer ops · content workflows. U.S. time zones, hyper-responsive, no drama.</p>
+  <div class="links">
+    <a href="mailto:alonsojuarez@proton.me" class="primary">alonsojuarez@proton.me</a>
+    <a href="https://www.upwork.com/freelancers/~011dc991f0fa27cb02">Upwork Profile</a>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

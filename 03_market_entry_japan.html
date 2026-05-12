@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Entry Feasibility: Premium Tequila → Tokyo — Carlos Juárez</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #070c1a;
+    --bg-2: #0d1426;
+    --glass: rgba(255,255,255,0.04);
+    --glass-strong: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.10);
+    --text: #e8edf5;
+    --text-dim: #8a94a8;
+    --cyan: #00e5ff;
+    --blue: #3b82f6;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --gold: #fbbf24;
+    --crimson: #dc2626;
+    --jade: #34d399;
+    --pink: #ec4899;
+    --purple: #a855f7;
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%; left: -10%;
+    width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%; right: -15%;
+    width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+  header .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(251,191,36,0.30);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    background: rgba(251,191,36,0.05);
+  }
+  header h1 {
+    font-size: 2.7rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #fff 0%, #fbbf24 50%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.15;
+  }
+  header .subtitle {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 750px;
+    margin: 0 auto 24px;
+  }
+  header .meta-row {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  header .meta-row span {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 5px 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+  }
+  header .meta-row strong { color: var(--text); }
+
+  section {
+    margin-bottom: 70px;
+  }
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  h2 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--gold), var(--crimson));
+    color: #000;
+    font-weight: 700;
+    border-radius: 10px;
+    font-size: 1.05rem;
+  }
+  .section-lead {
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    max-width: 800px;
+  }
+
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* EXECUTIVE SUMMARY */
+  .exec-summary {
+    padding: 32px;
+    background: linear-gradient(135deg, rgba(251,191,36,0.05), rgba(220,38,38,0.04));
+    border: 1px solid rgba(251,191,36,0.20);
+  }
+  .exec-summary h3 {
+    font-size: 1.05rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .exec-summary .findings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .exec-summary .finding {
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    border-left: 3px solid var(--gold);
+  }
+  .exec-summary .finding strong {
+    color: var(--gold);
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .exec-summary .finding .val {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .exec-summary .finding .desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+  .exec-summary .verdict {
+    padding: 18px 20px;
+    background: rgba(16,185,129,0.08);
+    border-left: 3px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    font-size: 0.95rem;
+    color: #d4f5e6;
+  }
+  .exec-summary .verdict strong { color: var(--green); }
+
+  /* MARKET OVERVIEW */
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .stat {
+    padding: 22px;
+    text-align: left;
+  }
+  .stat .label {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .stat .value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  .stat .value .unit {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .stat .detail {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+  .stat.gold { border-top: 2px solid var(--gold); }
+  .stat.cyan { border-top: 2px solid var(--cyan); }
+  .stat.green { border-top: 2px solid var(--green); }
+  .stat.crimson { border-top: 2px solid var(--crimson); }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  @media (max-width: 800px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .info-card {
+    padding: 26px;
+  }
+  .info-card h3 {
+    font-size: 1.08rem;
+    margin-bottom: 14px;
+    color: var(--gold);
+  }
+  .info-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .info-card ul li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .info-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* PRICING TABLE */
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .pricing-table th {
+    text-align: left;
+    padding: 14px 16px;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--glass-border);
+    background: rgba(255,255,255,0.02);
+  }
+  .pricing-table th.num {
+    text-align: right;
+  }
+  .pricing-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .pricing-table td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .pricing-table tr.self {
+    background: rgba(251,191,36,0.05);
+  }
+  .pricing-table tr.self td {
+    color: #fff;
+    font-weight: 600;
+  }
+  .pricing-table .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-left: 8px;
+    background: rgba(251,191,36,0.15);
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* COMPETITOR CHART */
+  .price-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .price-bar {
+    display: grid;
+    grid-template-columns: 200px 1fr 130px;
+    gap: 14px;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  .price-bar .brand {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .price-bar .brand.self { color: var(--gold); font-weight: 700; }
+  .price-bar .range-wrap {
+    position: relative;
+    height: 28px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .price-bar .range {
+    position: absolute;
+    top: 0; bottom: 0;
+    border-radius: 14px;
+    background: linear-gradient(90deg, rgba(0,229,255,0.30), rgba(0,229,255,0.50));
+    border-left: 2px solid var(--cyan);
+    border-right: 2px solid var(--cyan);
+  }
+  .price-bar .range.self {
+    background: linear-gradient(90deg, rgba(251,191,36,0.30), rgba(251,191,36,0.50));
+    border-color: var(--gold);
+  }
+  .price-bar .range.suggested {
+    background: linear-gradient(90deg, rgba(16,185,129,0.30), rgba(16,185,129,0.50));
+    border-color: var(--green);
+  }
+  .price-bar .range-label {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .scale-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 130px;
+    gap: 14px;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+  .scale-row .scale {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+  }
+
+  /* LOGISTICS CHART */
+  .logistics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .logistics-table th {
+    text-align: left;
+    padding: 12px 14px;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .logistics-table th.num { text-align: right; }
+  .logistics-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .logistics-table td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .logistics-table tr.total td {
+    border-top: 2px solid var(--glass-border);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: rgba(251,191,36,0.04);
+  }
+  .logistics-table .zero {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* CURRENCY BAR */
+  .currency-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 700px) {
+    .currency-row { grid-template-columns: 1fr; }
+  }
+  .currency {
+    padding: 22px;
+    text-align: center;
+  }
+  .currency .pair {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .currency .rate {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .currency .date {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  /* DISTRIBUTION GRID */
+  .dist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .dist-card {
+    padding: 22px;
+  }
+  .dist-card h4 {
+    font-size: 1.0rem;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+  .dist-card .role {
+    font-size: 0.78rem;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .dist-card p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* RECOMMENDATIONS */
+  .rec-list {
+    list-style: none;
+    padding: 0;
+  }
+  .rec-list li {
+    padding: 16px 22px;
+    margin-bottom: 12px;
+    background: rgba(16,185,129,0.05);
+    border-left: 3px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    gap: 14px;
+  }
+  .rec-list .num {
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    background: var(--green);
+    color: #000;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+  .rec-list .body strong {
+    color: #fff;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .rec-list .body span {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  /* FLAG STRIP */
+  .flag-strip {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: linear-gradient(90deg, rgba(0,107,63,0.15) 0%, transparent 33%, transparent 66%, rgba(206,17,38,0.15) 100%);
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.10);
+    margin-bottom: 18px;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+  .flag-strip .arrow {
+    color: var(--gold);
+    font-size: 1rem;
+  }
+
+  /* FOOTER */
+  .footer-note {
+    text-align: center;
+    padding: 40px 28px;
+    background: linear-gradient(135deg, rgba(251,191,36,0.05), rgba(220,38,38,0.04));
+    border-radius: 18px;
+    border: 1px solid rgba(251,191,36,0.20);
+  }
+  .footer-note h3 {
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .footer-note p {
+    color: var(--text-dim);
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 0.92rem;
+  }
+  .footer-note .author-line {
+    margin-top: 18px;
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  /* REFERENCES */
+  .references {
+    columns: 2;
+    column-gap: 28px;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  @media (max-width: 700px) {
+    .references { columns: 1; }
+  }
+  .references div {
+    break-inside: avoid;
+    padding: 8px 0;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.8rem; }
+    .container { padding: 30px 16px 60px; }
+    .price-bar, .scale-row { grid-template-columns: 130px 1fr 100px; gap: 8px; font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="flag-strip">
+    <span>🇲🇽 MÉXICO</span>
+    <span class="arrow">⇢</span>
+    <span>🇯🇵 JAPAN</span>
+  </div>
+  <div class="badge">Portfolio Case Study · International Market Entry Feasibility</div>
+  <h1>Premium Tequila Export Feasibility: México → Tokyo</h1>
+  <p class="subtitle">30-page market-entry analysis for José Cuervo Tradicional Reposado 100% Agave entering the Japanese premium spirits market — covering pricing, logistics, trade agreements, competitive positioning, and distribution strategy.</p>
+  <div class="meta-row">
+    <span><strong>Lead analyst:</strong> Carlos Juárez</span>
+    <span><strong>Scope:</strong> Full market-entry feasibility</span>
+    <span><strong>Period:</strong> Dec 2025 – May 2026</span>
+    <span><strong>Methodology:</strong> APA 7th, peer-reviewed sources</span>
+  </div>
+</header>
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <h2><span class="num">①</span>Executive Summary</h2>
+  <div class="glass exec-summary">
+    <h3>Key Findings</h3>
+    <div class="findings">
+      <div class="finding">
+        <strong>Tariff</strong>
+        <div class="val">0%</div>
+        <div class="desc">via AAE México-Japón &amp; CPTPP</div>
+      </div>
+      <div class="finding">
+        <strong>Suggested retail</strong>
+        <div class="val">4,500–6,000 JPY</div>
+        <div class="desc">below median competitor range</div>
+      </div>
+      <div class="finding">
+        <strong>CIF Yokohama</strong>
+        <div class="val">$54,900 USD</div>
+        <div class="desc">per 20-ft container (6,720 bottles)</div>
+      </div>
+      <div class="finding">
+        <strong>Unit landed cost</strong>
+        <div class="val">$8.17 USD</div>
+        <div class="desc">~1,302 JPY before margin</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <strong>Verdict:</strong> Market entry is commercially viable and strategically sound. The 0% tariff regime, weak JPY making premium imports attractive, and competitor pricing range of 6,500–9,500 JPY allow a sustainable margin while undercutting Don Julio and Herradura in the premium tier. Distribution gates are mapped and accessible through 6 vetted partners.
+    </div>
+  </div>
+</section>
+
+<!-- MARKET OVERVIEW -->
+<section>
+  <h2><span class="num">②</span>Market Overview — Japan</h2>
+  <p class="section-lead">Japan's premium spirits segment is supported by high disposable income, sophisticated consumer preference for premium imports, and a cultural appreciation for craft and authenticity — all favorable for positioning a heritage product.</p>
+
+  <div class="market-grid">
+    <div class="glass stat gold">
+      <div class="label">GDP nominal</div>
+      <div class="value">$4.03 <span class="unit">T USD</span></div>
+      <div class="detail">3rd largest economy globally</div>
+    </div>
+    <div class="glass stat cyan">
+      <div class="label">GDP per capita</div>
+      <div class="value">$32,487</div>
+      <div class="detail">High purchasing power</div>
+    </div>
+    <div class="glass stat green">
+      <div class="label">Premium import affinity</div>
+      <div class="value">High</div>
+      <div class="detail">Quality &gt; price for premium tier</div>
+    </div>
+    <div class="glass stat crimson">
+      <div class="label">Trade-agreement coverage</div>
+      <div class="value">2 of 2</div>
+      <div class="detail">AAE 2005 + CPTPP</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top: 22px;">
+    <div class="glass info-card">
+      <h3>Why the consumer segment fits</h3>
+      <ul>
+        <li>Premium spirits market valued at over 6 trillion JPY annually (JETRO, 2024)</li>
+        <li>Strong cultural preference for products that signal craftsmanship and origin authenticity</li>
+        <li>Gift-giving culture (Oseibo, Ochugen) drives premium spirits sales twice annually</li>
+        <li>Importer/retail margin structure (250-350%) supports brand-building investment</li>
+      </ul>
+    </div>
+    <div class="glass info-card">
+      <h3>Regulatory framework (must comply)</h3>
+      <ul>
+        <li>Liquor Tax Law — labeling in Japanese mandatory</li>
+        <li>Food Labeling Act — ingredient/producer disclosure</li>
+        <li>Age restriction notice (sale prohibited &lt;20 years)</li>
+        <li>NIMF-15 pallets for wooden packaging entry</li>
+        <li>Certificate of Origin via VUCEM (Mexico-Japan)</li>
+        <li>CRT authenticity certification (Consejo Regulador del Tequila)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CURRENCY ANALYSIS -->
+<section>
+  <h2><span class="num">③</span>FX Analysis (Banco de México, April 2026)</h2>
+  <p class="section-lead">The currency pair regime favors Mexican exports — a weak JPY relative to USD makes premium imports relatively attractive to Japanese consumers in the high-affinity segment.</p>
+
+  <div class="currency-row">
+    <div class="glass currency" style="border-top: 2px solid var(--cyan);">
+      <div class="pair">USD ↔ JPY</div>
+      <div class="rate">1 USD = 159.30 JPY</div>
+      <div class="date">Banco de México · April 2026</div>
+    </div>
+    <div class="glass currency" style="border-top: 2px solid var(--green);">
+      <div class="pair">MXN ↔ JPY</div>
+      <div class="rate">1 MXN = 9.18 JPY</div>
+      <div class="date">Banco de México · April 2026</div>
+    </div>
+    <div class="glass currency" style="border-top: 2px solid var(--gold);">
+      <div class="pair">USD ↔ MXN</div>
+      <div class="rate">1 USD = 17.35 MXN</div>
+      <div class="date">Derived cross-rate</div>
+    </div>
+  </div>
+
+  <div class="glass" style="padding: 22px; margin-top: 18px; border-left: 3px solid var(--gold);">
+    <strong style="color: var(--gold);">Strategic implication:</strong> <span style="color: var(--text);">The weak JPY makes premium imports more attractive in the Japanese premium segment, because affluent consumers prioritize quality and authenticity over nominal price. This is a tactical window — historically the JPY strengthens against USD during global risk-off periods, so the favorable margin should be locked in during entry phase.</span>
+  </div>
+</section>
+
+<!-- PRICING & COMPETITION -->
+<section>
+  <h2><span class="num">④</span>Competitive Pricing &amp; Suggested Retail</h2>
+  <p class="section-lead">Direct competitive benchmark across the premium tequila segment in Japan, with proposed price positioning derived from landed unit cost + distributor margin model.</p>
+
+  <div class="glass" style="padding: 24px; margin-bottom: 18px;">
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Premium tequila brand</th>
+          <th class="num">JPY (Retail)</th>
+          <th class="num">USD equiv.</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="self">
+          <td>José Cuervo Tradicional Reposado <span class="tag">target</span></td>
+          <td class="num">6,500 – 9,500</td>
+          <td class="num">$41 – $60</td>
+          <td>Mid-premium</td>
+        </tr>
+        <tr>
+          <td>Don Julio Reposado</td>
+          <td class="num">8,000 – 12,000</td>
+          <td class="num">$50 – $75</td>
+          <td>Upper-premium</td>
+        </tr>
+        <tr>
+          <td>Herradura Reposado</td>
+          <td class="num">7,500 – 10,500</td>
+          <td class="num">$47 – $66</td>
+          <td>Upper-mid premium</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="glass" style="padding: 24px;">
+    <h3 style="font-size: 1.0rem; color: var(--gold); margin-bottom: 16px;">Visual price-band comparison (JPY)</h3>
+    <div class="price-bars">
+      <div class="price-bar">
+        <span class="brand">Don Julio</span>
+        <div class="range-wrap">
+          <div class="range" style="left: 33%; right: 0;"></div>
+        </div>
+        <span class="range-label">8,000 – 12,000</span>
+      </div>
+      <div class="price-bar">
+        <span class="brand">Herradura</span>
+        <div class="range-wrap">
+          <div class="range" style="left: 25%; right: 12.5%;"></div>
+        </div>
+        <span class="range-label">7,500 – 10,500</span>
+      </div>
+      <div class="price-bar">
+        <span class="brand self">José Cuervo (current)</span>
+        <div class="range-wrap">
+          <div class="range self" style="left: 16.7%; right: 20.8%;"></div>
+        </div>
+        <span class="range-label">6,500 – 9,500</span>
+      </div>
+      <div class="price-bar">
+        <span class="brand" style="color: var(--green);">Suggested entry price</span>
+        <div class="range-wrap">
+          <div class="range suggested" style="left: 0; right: 50%;"></div>
+        </div>
+        <span class="range-label" style="color: var(--green);">4,500 – 6,000</span>
+      </div>
+    </div>
+    <div class="scale-row">
+      <span></span>
+      <div class="scale">
+        <span>0 JPY</span>
+        <span>3,000</span>
+        <span>6,000</span>
+        <span>9,000</span>
+        <span>12,000</span>
+      </div>
+      <span></span>
+    </div>
+
+    <div style="margin-top: 22px; padding: 16px 20px; background: rgba(16,185,129,0.06); border-left: 3px solid var(--green); border-radius: 0 10px 10px 0;">
+      <strong style="color: var(--green);">Positioning rationale:</strong> <span style="color: var(--text);">Pricing below current market (6,500–9,500 JPY) and below median competitor allows market share gain without sacrificing premium perception or distributor margin. The 250-350% margin uplift typical of premium imported alcohol in Japan still produces sustainable returns at the suggested entry price.</span>
+    </div>
+  </div>
+</section>
+
+<!-- LOGISTICS COSTS -->
+<section>
+  <h2><span class="num">⑤</span>Logistics Cost Breakdown (Incoterm CIF Yokohama)</h2>
+  <p class="section-lead">Full landed-cost model for a 20-ft container (6,720 bottles · 10 pallets) shipped Manzanillo → Yokohama. Trade agreement provisions eliminate tariffs entirely.</p>
+
+  <div class="glass" style="padding: 24px;">
+    <table class="logistics-table">
+      <thead>
+        <tr>
+          <th>Cost concept</th>
+          <th class="num">USD</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Goods value (EXW)</td>
+          <td class="num">$50,000.00</td>
+          <td>Factory price · Tequila, Jalisco</td>
+        </tr>
+        <tr>
+          <td>Inland freight plant → port</td>
+          <td class="num">$1,200.00</td>
+          <td>To Manzanillo</td>
+        </tr>
+        <tr>
+          <td>México customs &amp; brokerage</td>
+          <td class="num">$600.00</td>
+          <td>Agent + DTA validations</td>
+        </tr>
+        <tr>
+          <td>Ocean freight Manzanillo → Yokohama</td>
+          <td class="num">$2,800.00</td>
+          <td>20-ft container, regular Asia routing</td>
+        </tr>
+        <tr>
+          <td>International insurance</td>
+          <td class="num">$300.00</td>
+          <td>0.5%–1% of total value</td>
+        </tr>
+        <tr>
+          <td>Japan tariffs (alcoholic spirits)</td>
+          <td class="num zero">$0.00</td>
+          <td>Eliminated by AAE Mexico-Japan + CPTPP</td>
+        </tr>
+        <tr class="total">
+          <td>Total CIF Yokohama</td>
+          <td class="num">$54,900.00</td>
+          <td>Investment landed at Japanese port</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+      <div style="padding: 14px 16px; background: rgba(0,229,255,0.06); border-radius: 10px;">
+        <div style="font-size: 0.74rem; color: var(--text-dim); letter-spacing: 1px;">UNIT LANDED COST</div>
+        <div style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-top: 4px;">$8.17 USD</div>
+        <div style="font-size: 0.78rem; color: var(--text-dim);">≈ 1,302 JPY per bottle</div>
+      </div>
+      <div style="padding: 14px 16px; background: rgba(16,185,129,0.06); border-radius: 10px;">
+        <div style="font-size: 0.74rem; color: var(--text-dim); letter-spacing: 1px;">CONTAINER LOAD</div>
+        <div style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-top: 4px;">6,720</div>
+        <div style="font-size: 0.78rem; color: var(--text-dim);">bottles per 20-ft container</div>
+      </div>
+      <div style="padding: 14px 16px; background: rgba(251,191,36,0.06); border-radius: 10px;">
+        <div style="font-size: 0.74rem; color: var(--text-dim); letter-spacing: 1px;">TARIFF SAVINGS</div>
+        <div style="font-size: 1.3rem; font-weight: 700; color: var(--green); margin-top: 4px;">$0</div>
+        <div style="font-size: 0.78rem; color: var(--text-dim);">vs. typical 16% MFN rate</div>
+      </div>
+      <div style="padding: 14px 16px; background: rgba(168,85,247,0.06); border-radius: 10px;">
+        <div style="font-size: 0.74rem; color: var(--text-dim); letter-spacing: 1px;">TRANSIT TIME</div>
+        <div style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-top: 4px;">18–21 days</div>
+        <div style="font-size: 0.78rem; color: var(--text-dim);">Manzanillo → Yokohama</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISTRIBUTION CHANNELS -->
+<section>
+  <h2><span class="num">⑥</span>Distribution Channels — Vetted Partners</h2>
+  <p class="section-lead">Six distribution partners identified through Trade Map, Kompass, GlobalTrade.net, and JETRO databases. Each evaluated against premium-alcohol channel access in Japan.</p>
+
+  <div class="dist-grid">
+    <div class="glass dist-card">
+      <h4>Suntory Spirits Limited</h4>
+      <div class="role">Tier 1 · Market leader</div>
+      <p>Largest Japanese spirits distributor with full retail, HORECA, and duty-free network. Highest reach but most competitive shelf placement.</p>
+    </div>
+    <div class="glass dist-card">
+      <h4>Asahi Breweries</h4>
+      <div class="role">Tier 1 · Diversified portfolio</div>
+      <p>Proven international alcoholic-beverage distribution. Strong retail presence and import-product expertise.</p>
+    </div>
+    <div class="glass dist-card">
+      <h4>Yoshino Spirits Co.</h4>
+      <div class="role">Tier 2 · Premium focus</div>
+      <p>Specialized in high-end imported spirits. More selective portfolio, better visibility for premium positioning.</p>
+    </div>
+    <div class="glass dist-card">
+      <h4>Daiei Sangyo Co. Ltd.</h4>
+      <div class="role">Tier 2 · Premium focus</div>
+      <p>Premium-category importer with established HORECA channel and gourmet retail relationships.</p>
+    </div>
+    <div class="glass dist-card">
+      <h4>SHIN Group Corporation</h4>
+      <div class="role">Tier 2 · Global premium</div>
+      <p>Global premium beverages distributor with Japan-specific retail integration. Strong for international brand launches.</p>
+    </div>
+    <div class="glass dist-card" style="border: 1px solid rgba(251,191,36,0.30); background: rgba(251,191,36,0.04);">
+      <h4 style="color: var(--gold);">Agave Spirits Gallery Japan</h4>
+      <div class="role">Tier 1 · Category specialist</div>
+      <p>Specialized exclusively in agave-derived spirits. Highest cultural fit, validates the consumer-segment thesis for the entire category.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section>
+  <h2><span class="num">⑦</span>Strategic Recommendations</h2>
+  <p class="section-lead">Prioritized action plan based on findings. Execution sequence designed to lock in the favorable JPY/USD parity window and capture first-mover positioning before the JPY strengthens.</p>
+
+  <ol class="rec-list">
+    <li class="glass">
+      <span class="num">1</span>
+      <div class="body">
+        <strong>Enter at 4,500–6,000 JPY price point</strong>
+        <span>Below median premium-segment competitor. Captures share without compromising distributor margin or perceived quality. Reposition upward only after distribution lock-in.</span>
+      </div>
+    </li>
+    <li class="glass">
+      <span class="num">2</span>
+      <div class="body">
+        <strong>Lead with Agave Spirits Gallery + 1 tier-2 partner (Yoshino or Daiei)</strong>
+        <span>Specialist channel validates category, premium-importer adds reach. Avoid tier-1 (Suntory/Asahi) until brand is established — too easily diluted on a crowded shelf.</span>
+      </div>
+    </li>
+    <li class="glass">
+      <span class="num">3</span>
+      <div class="body">
+        <strong>Migrate packaging to 700 ml with cultural-edition limited series</strong>
+        <span>700 ml is the entry condition for Japanese premium retail. Edition limited with kanji/sakura motifs (regulatory-compliant) leverages local aesthetic preference proven by JETRO 2024 data.</span>
+      </div>
+    </li>
+    <li class="glass">
+      <span class="num">4</span>
+      <div class="body">
+        <strong>Time the launch to Q3 to maximize Oseibo gift-cycle</strong>
+        <span>The Oseibo end-of-year gift cycle drives 35-40% of premium-spirits annual sales. Inventory must land by mid-September to be on shelf for the buying season.</span>
+      </div>
+    </li>
+    <li class="glass">
+      <span class="num">5</span>
+      <div class="body">
+        <strong>Lock CIF Yokohama logistics provider for Year-1 baseline</strong>
+        <span>$54,900 USD per 20-ft container is the operating assumption. Hedge JPY exposure for first 18 months — yen strength would compress margins, weakness extends the favorable window.</span>
+      </div>
+    </li>
+    <li class="glass">
+      <span class="num">6</span>
+      <div class="body">
+        <strong>FOODEX Japan + Wine and Gourmet Japan = entry-year trade-show priority</strong>
+        <span>80,000+ professional visitors at FOODEX alone. Single trade-show pass to validate distributor interest, generate qualified leads, and finalize partner selection.</span>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- REFERENCES -->
+<section>
+  <h2><span class="num">⑧</span>References</h2>
+  <p class="section-lead">All data sourced from primary and peer-reviewed publications. APA 7th edition formatting.</p>
+
+  <div class="glass" style="padding: 28px;">
+    <div class="references">
+      <div>Banco de México. (2026). <em>Tipo de cambio y mercado cambiario.</em></div>
+      <div>Central Intelligence Agency. (2025). <em>The world factbook: Japan.</em></div>
+      <div>Consejo Regulador del Tequila. (2025). <em>Normatividad y certificación del tequila.</em></div>
+      <div>Czinkota, M. R., &amp; Ronkainen, I. A. (2008). <em>Marketing internacional</em> (8th ed.). Cengage Learning.</div>
+      <div>Daniels, J. D., Radebaugh, L. H., &amp; Sullivan, D. P. (2013). <em>Negocios internacionales: Ambientes y operaciones</em> (14th ed.). Pearson Educación.</div>
+      <div>FITA. (2024). <em>Global trade resources.</em></div>
+      <div>GlobalTrade.net. (2024). <em>International business and trade services.</em></div>
+      <div>Hofstede Insights. (2025). <em>Country comparison tool: Japan.</em></div>
+      <div>International Trade Centre. (2024). <em>Trade statistics and market analysis.</em></div>
+      <div>Japan External Trade Organization. (2024). <em>Import regulations and market opportunities for alcoholic beverages in Japan.</em></div>
+      <div>Kompass. (2024). <em>Base de datos de empresas internacionales.</em></div>
+      <div>Lerma, A., &amp; Márquez, E. (2010). <em>Comercio y marketing internacional.</em> Cengage Learning.</div>
+      <div>Secretaría de Economía. (2025). <em>Sistema Nacional de Información de Comercio Exterior (SNICE).</em></div>
+      <div>Sistema de Información sobre Comercio Exterior. (2024). <em>Acuerdo de Asociación Económica México-Japón.</em></div>
+      <div>Trade Map. (2024). <em>Estadísticas de comercio internacional.</em></div>
+      <div>Velandia, C., Rozas, S., &amp; Lombana, C. (2016). <em>Negocios internacionales: Fundamentos y estrategias</em> (2nd ed.). Ecoe Ediciones.</div>
+      <div>World Bank. (2024). <em>Japan economic data.</em></div>
+      <div>World Trade Organization. (2024). <em>International trade statistics.</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-note">
+  <h3>This is the analytical work I bring to cross-border projects.</h3>
+  <p>Market-entry feasibility, competitive landscape, pricing model, logistics cost engineering, regulatory mapping, distribution strategy — all delivered with native bilingual capability and APA-cited rigor.</p>
+  <div class="author-line"><strong>Carlos Juárez</strong> · Bilingual Business Analyst (EN↔ES) · México ↔ Global Markets</div>
+</div>
+
+</div>
+</body>
+</html>

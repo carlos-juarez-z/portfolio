@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Augmented Customer Support Playbook — Carlos Juárez</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #070c1a;
+    --bg-2: #0d1426;
+    --glass: rgba(255,255,255,0.04);
+    --glass-strong: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.10);
+    --text: #e8edf5;
+    --text-dim: #8a94a8;
+    --cyan: #00e5ff;
+    --blue: #3b82f6;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --purple: #a855f7;
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%; left: -10%;
+    width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(0,229,255,0.10) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%; right: -15%;
+    width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 70px 28px 100px;
+    z-index: 1;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+  header .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid rgba(0,229,255,0.30);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    background: rgba(0,229,255,0.05);
+  }
+  header h1 {
+    font-size: 2.9rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #00e5ff 60%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.15;
+  }
+  header .subtitle {
+    color: var(--text-dim);
+    font-size: 1.10rem;
+    max-width: 700px;
+    margin: 0 auto 28px;
+  }
+  .author-line {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    margin-top: 18px;
+  }
+  .author-line strong { color: var(--text); }
+  section {
+    margin-bottom: 70px;
+    scroll-margin-top: 30px;
+  }
+  h2 {
+    font-size: 1.65rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  h2 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #000;
+    font-weight: 700;
+    border-radius: 10px;
+    font-size: 1.05rem;
+  }
+  .section-lead {
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    max-width: 800px;
+  }
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* PHILOSOPHY */
+  .philosophy {
+    padding: 36px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(0,229,255,0.06), rgba(168,85,247,0.04));
+    border: 1px solid rgba(0,229,255,0.20);
+  }
+  .philosophy blockquote {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.55;
+    max-width: 800px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+  .philosophy .attribution {
+    margin-top: 18px;
+    color: var(--cyan);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* TIER GRID */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 900px) {
+    .tier-grid { grid-template-columns: 1fr; }
+  }
+  .tier {
+    padding: 26px;
+    transition: transform 0.25s, border-color 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier:hover {
+    transform: translateY(-4px);
+  }
+  .tier .tier-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .tier.t1 .tier-tag { background: rgba(16,185,129,0.15); color: var(--green); }
+  .tier.t2 .tier-tag { background: rgba(245,158,11,0.15); color: var(--amber); }
+  .tier.t3 .tier-tag { background: rgba(239,68,68,0.15); color: var(--red); }
+  .tier.t1 { border-left: 3px solid var(--green); }
+  .tier.t2 { border-left: 3px solid var(--amber); }
+  .tier.t3 { border-left: 3px solid var(--red); }
+  .tier h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+  }
+  .tier .target {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .tier ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+  }
+  .tier ul li {
+    font-size: 0.92rem;
+    color: var(--text);
+    padding: 5px 0 5px 22px;
+    position: relative;
+  }
+  .tier ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+  }
+  .tier .ai-touch {
+    margin-top: 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+  .tier.t1 .ai-touch { background: rgba(16,185,129,0.08); color: #b5f5d8; }
+  .tier.t2 .ai-touch { background: rgba(245,158,11,0.08); color: #ffe3a8; }
+  .tier.t3 .ai-touch { background: rgba(239,68,68,0.08); color: #ffc4c4; }
+
+  /* TEMPLATES TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab:hover {
+    color: var(--text);
+    border-color: rgba(0,229,255,0.30);
+  }
+  .tab.active {
+    background: rgba(0,229,255,0.12);
+    color: var(--cyan);
+    border-color: rgba(0,229,255,0.40);
+  }
+  .template-card {
+    padding: 24px;
+    margin-bottom: 12px;
+  }
+  .template-card .meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .template-card .meta span {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+  .template-card .scenario {
+    color: var(--cyan);
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .template-card .ticket-in,
+  .template-card .ticket-out {
+    background: rgba(0,0,0,0.25);
+    border-left: 3px solid;
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 8px 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .template-card .ticket-in {
+    border-color: var(--text-dim);
+    color: var(--text-dim);
+  }
+  .template-card .ticket-out {
+    border-color: var(--green);
+    color: var(--text);
+  }
+  .template-card .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    margin-top: 14px;
+  }
+  .template-pair {
+    display: none;
+  }
+  .template-pair.active {
+    display: block;
+  }
+
+  /* WORKFLOW DIAGRAM */
+  .workflow-svg {
+    width: 100%;
+    height: auto;
+    max-width: 900px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* METRICS GRID */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .metric {
+    padding: 20px;
+    text-align: left;
+  }
+  .metric .label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .metric .value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .metric .value .unit {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .metric .delta {
+    font-size: 0.8rem;
+    color: var(--green);
+  }
+  .metric .delta.down { color: var(--red); }
+  .metric.cyan { border-left: 3px solid var(--cyan); }
+  .metric.blue { border-left: 3px solid var(--blue); }
+  .metric.green { border-left: 3px solid var(--green); }
+  .metric.amber { border-left: 3px solid var(--amber); }
+  .metric.red { border-left: 3px solid var(--red); }
+  .metric.purple { border-left: 3px solid var(--purple); }
+
+  /* KB STRUCTURE */
+  .kb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .kb-card {
+    padding: 22px;
+  }
+  .kb-card h4 {
+    font-size: 1.02rem;
+    margin-bottom: 8px;
+    color: var(--cyan);
+  }
+  .kb-card .count {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .kb-card ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 8px;
+  }
+  .kb-card li {
+    font-size: 0.88rem;
+    padding: 4px 0;
+    color: var(--text);
+  }
+  .kb-card li::before {
+    content: '·  ';
+    color: var(--cyan);
+  }
+
+  /* QUALITY CONTROL */
+  .qc-list {
+    list-style: none;
+    padding: 0;
+  }
+  .qc-list li {
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    background: rgba(16,185,129,0.04);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .qc-list .check {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .qc-list strong { color: var(--text); }
+
+  /* CLOSING */
+  .closing {
+    text-align: center;
+    padding: 50px 28px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(59,130,246,0.05));
+    border: 1px solid rgba(0,229,255,0.25);
+    border-radius: 18px;
+  }
+  .closing h3 {
+    font-size: 1.45rem;
+    color: var(--cyan);
+    margin-bottom: 14px;
+  }
+  .closing p {
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 8px auto;
+  }
+  .closing .contact {
+    margin-top: 22px;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  /* Hide scrollbar for tab content */
+  .templates-wrapper {
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 2.0rem; }
+    .container { padding: 40px 18px 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="badge">Portfolio · Carlos Juárez · CS Lead Playbook</div>
+  <h1>AI-Augmented Customer Support Playbook</h1>
+  <p class="subtitle">How I run 100-150 daily tickets with AI as a force multiplier — without sacrificing CSAT, brand voice, or escalation discipline. Built for SaaS, AI products, and B2B platforms scaling fast.</p>
+  <div class="author-line"><strong>Carlos Juárez</strong> · Bilingual CS Lead (EN↔ES) · 5+ years U.S. markets</div>
+</header>
+
+<!-- 1. PHILOSOPHY -->
+<section>
+  <h2><span class="num">1</span>Operating Philosophy</h2>
+  <p class="section-lead">Before tactics, the principle. This is what separates AI-assisted support from AI-replaced support — and why clients trust the first one.</p>
+  <div class="glass philosophy">
+    <blockquote>
+      "AI drafts. Humans review. Customers receive a response that feels personal because a human chose every word — even if a machine suggested the first version."
+    </blockquote>
+    <div class="attribution">— Operating principle for every ticket I handle</div>
+  </div>
+</section>
+
+<!-- 2. TIERED FRAMEWORK -->
+<section>
+  <h2><span class="num">2</span>Tiered Support Framework</h2>
+  <p class="section-lead">A 3-tier system where AI accelerates volume work, human judgment owns nuance, and engineering only sees what truly needs them. Each tier has clear ownership, response targets, and AI involvement.</p>
+
+  <div class="tier-grid">
+    <div class="glass tier t1">
+      <span class="tier-tag">TIER 1 · AI-ASSISTED</span>
+      <h3>Routine inquiries</h3>
+      <div class="target">Target: 30-45 sec response · 90%+ same-day resolve</div>
+      <ul>
+        <li>Password resets &amp; account access</li>
+        <li>Billing questions &amp; invoice resends</li>
+        <li>Feature discovery &amp; "how do I..." questions</li>
+        <li>Status of known issues</li>
+        <li>Plan changes &amp; basic settings</li>
+      </ul>
+      <div class="ai-touch"><strong>AI role:</strong> Drafts response from template library. Human personalizes name, context, sentiment. Always reviewed before send.</div>
+    </div>
+
+    <div class="glass tier t2">
+      <span class="tier-tag">TIER 2 · HUMAN-CENTRIC</span>
+      <h3>Complex / nuanced cases</h3>
+      <div class="target">Target: 90-120 sec response · &lt;24h resolve</div>
+      <ul>
+        <li>Bug reports with reproduction steps needed</li>
+        <li>Integration issues (API, webhooks, third-party)</li>
+        <li>Billing disputes &amp; refund requests</li>
+        <li>Multi-step technical troubleshooting</li>
+        <li>Account ownership / data export requests</li>
+      </ul>
+      <div class="ai-touch"><strong>AI role:</strong> Suggests diagnostic steps and surfaces similar past tickets. Human owns judgment on resolution path.</div>
+    </div>
+
+    <div class="glass tier t3">
+      <span class="tier-tag">TIER 3 · ENGINEERING</span>
+      <h3>Real bugs &amp; outages</h3>
+      <div class="target">Target: 4h triage · SLA per severity</div>
+      <ul>
+        <li>Confirmed product bugs requiring code fix</li>
+        <li>Data integrity issues</li>
+        <li>Security incidents</li>
+        <li>Performance / scaling failures</li>
+        <li>Cross-system integration breakages</li>
+      </ul>
+      <div class="ai-touch"><strong>AI role:</strong> Helps draft structured bug report (steps, expected vs. actual, environment, logs). Human owns engineering handoff and customer communication.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SAMPLE TEMPLATES -->
+<section>
+  <h2><span class="num">3</span>Response Templates in Action</h2>
+  <p class="section-lead">Real examples of AI-drafted, human-curated responses. Each one shows the customer's ticket, the AI-assisted draft, and the personalization layer that makes it land. Click a category to explore.</p>
+
+  <div class="tabs">
+    <button class="tab active" data-target="t-billing">Billing</button>
+    <button class="tab" data-target="t-bug">Bug Report</button>
+    <button class="tab" data-target="t-feature">Feature Question</button>
+    <button class="tab" data-target="t-bilingual">Bilingual EN↔ES</button>
+    <button class="tab" data-target="t-escalation">Escalation</button>
+  </div>
+
+  <div class="templates-wrapper">
+
+    <div class="template-pair active" id="t-billing">
+      <div class="glass template-card">
+        <div class="meta">
+          <span>TIER 1</span><span>Resolution: 35 sec</span><span>Volume: ~12/day</span>
+        </div>
+        <div class="scenario">Scenario: Customer asks why they were charged twice</div>
+        <div class="label">Customer ticket</div>
+        <div class="ticket-in">"Hey, I just saw two charges from you on my card this morning — $49 each. What's going on? I only signed up for one plan."</div>
+        <div class="label">My response (AI-drafted, human-curated)</div>
+        <div class="ticket-out">Hi Sarah,<br><br>I checked your account and I can see what happened — you're not being double-charged. The first $49 is your monthly subscription that renewed today, and the second $49 is a one-time charge for the seats you added on October 18th. I've sent a copy of both invoices to your email so you can confirm the line items.<br><br>If anything still looks off after reviewing, reply here and I'll dig deeper. Otherwise you're good — sorry for the scare.<br><br>— Carlos</div>
+      </div>
+    </div>
+
+    <div class="template-pair" id="t-bug">
+      <div class="glass template-card">
+        <div class="meta">
+          <span>TIER 2 → 3</span><span>Triage: 4 min</span><span>Engineering handoff</span>
+        </div>
+        <div class="scenario">Scenario: User reports broken integration → escalation needed</div>
+        <div class="label">Customer ticket</div>
+        <div class="ticket-in">"Your Slack integration stopped sending notifications this morning. We rely on this for our standups. Please fix ASAP."</div>
+        <div class="label">My customer response (Tier 2 acknowledgment)</div>
+        <div class="ticket-out">Hi Marcus,<br><br>Confirmed on my end — I can reproduce the issue with our internal test workspace. This is a real bug, not a config problem on your side. I've escalated to engineering with full reproduction steps and tagged it as P1 (you mentioned this affects daily standups).<br><br>You'll get a status update from me within 4 hours, even if the fix isn't deployed yet. In the meantime, I can manually trigger your notifications if that helps — just reply with a yes.<br><br>— Carlos</div>
+        <div class="label">Engineering handoff (internal, AI-structured)</div>
+        <div class="ticket-out" style="border-color: var(--amber); color: #ffd789; font-family: 'Menlo', monospace; font-size: 0.85rem;"><strong>P1 Bug · Slack Integration Notifications Failed</strong><br>
+Steps to reproduce:<br>
+1. Trigger event X on workspace Y<br>
+2. Expected: Slack DM sent within 10 sec<br>
+3. Actual: No message received, no error in user-facing logs<br>
+<br>
+Environment: Production, US-East-1<br>
+Affected: confirmed 8+ workspaces (per ticket trend)<br>
+First reported: today, 06:32 PT<br>
+Customer impact: standup workflows blocked<br>
+Workaround: manual notification trigger (working)</div>
+      </div>
+    </div>
+
+    <div class="template-pair" id="t-feature">
+      <div class="glass template-card">
+        <div class="meta">
+          <span>TIER 1</span><span>Resolution: 45 sec</span><span>Convert opportunity</span>
+        </div>
+        <div class="scenario">Scenario: User asks about feature availability</div>
+        <div class="label">Customer ticket</div>
+        <div class="ticket-in">"Does your platform support exporting data to CSV? I need to pull our customer list for an analysis."</div>
+        <div class="label">My response</div>
+        <div class="ticket-out">Hi Devon,<br><br>Yes — CSV export is available on your current plan. From the Customers tab, click the "..." menu in the top right and select "Export to CSV". You'll get an email with the download link within 60 seconds (it processes in the background so the UI stays responsive even with large lists).<br><br>If you're pulling for analysis: we also have a direct connection to Looker and a BigQuery export if you need something more live. Happy to walk you through either — let me know.<br><br>— Carlos</div>
+      </div>
+    </div>
+
+    <div class="template-pair" id="t-bilingual">
+      <div class="glass template-card">
+        <div class="meta">
+          <span>TIER 1</span><span>Resolution: 50 sec</span><span>EN↔ES handoff</span>
+        </div>
+        <div class="scenario">Scenario: Ticket comes in Spanish, customer is Mexico-based</div>
+        <div class="label">Ticket (Spanish — original)</div>
+        <div class="ticket-in">"Hola, necesito ayuda. Cancelé mi cuenta el mes pasado pero me siguen cobrando. ¿Pueden revisar por favor?"</div>
+        <div class="label">My response (Spanish — native Mexican tone)</div>
+        <div class="ticket-out">Hola Andrea,<br><br>Reviso tu cuenta ahora mismo. Veo que tu cancelación quedó registrada el 12 de octubre, pero el cobro de noviembre se procesó porque el periodo de facturación cerró un día antes — fue un caso de mala suerte de timing.<br><br>Ya emití el reembolso completo del último cargo ($49 USD). Verás el dinero de regreso en tu tarjeta en 5-7 días hábiles. Tu cuenta queda cerrada permanentemente como pediste.<br><br>Una disculpa por el inconveniente, Andrea. Si necesitas algo más, aquí estoy.<br><br>— Carlos</div>
+        <div class="label">Internal note (English — for team visibility)</div>
+        <div class="ticket-out" style="border-color: var(--purple); color: #d4b3ff; font-size: 0.88rem;">Refunded last charge ($49) per cancellation-timing edge case. Customer responded in Spanish, used MX-localized tone. Closing ticket — no further follow-up needed.</div>
+      </div>
+    </div>
+
+    <div class="template-pair" id="t-escalation">
+      <div class="glass template-card">
+        <div class="meta">
+          <span>TIER 2 · sensitive</span><span>Resolution: 8 min</span><span>De-escalation</span>
+        </div>
+        <div class="scenario">Scenario: Angry customer threatens to leave + bad review</div>
+        <div class="label">Customer ticket</div>
+        <div class="ticket-in">"This is the THIRD time I've reported this issue and nothing has been fixed. We're paying $500/month and your support is useless. I'm cancelling and writing a bad review unless someone gets this resolved TODAY."</div>
+        <div class="label">My response (de-escalation + accountability)</div>
+        <div class="ticket-out">Hi Jordan,<br><br>You're right to be frustrated — third report on the same issue is not acceptable from our side, and I want to fix that today, not just resolve the symptom.<br><br>I just pulled all 3 of your previous tickets. The pattern is clear: each time we resolved the visible problem but didn't address the root cause (a config drift in your workspace that re-introduces the bug). I'm escalating this directly to our engineering lead with full context — not just another ticket in the queue.<br><br>Two commitments:<br>1. You'll have a permanent fix (not a workaround) by end of day Friday.<br>2. I'll personally own this until it's resolved — direct line through this ticket.<br><br>And about the review — I get it. Hold off if you can, give me until Friday. If we don't deliver, the review writes itself and I won't blame you.<br><br>— Carlos</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. WORKFLOW DIAGRAM -->
+<section>
+  <h2><span class="num">4</span>Daily Workflow at 100-150 Tickets</h2>
+  <p class="section-lead">The operating model that makes high volume possible without quality drop. Not theoretical — this is the rhythm I've validated across multiple support roles.</p>
+
+  <div class="glass" style="padding: 28px;">
+    <svg class="workflow-svg" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background grid lines for time scale -->
+      <line x1="40" y1="60" x2="860" y2="60" stroke="rgba(255,255,255,0.1)" stroke-dasharray="3 4"/>
+      <line x1="40" y1="320" x2="860" y2="320" stroke="rgba(255,255,255,0.1)" stroke-dasharray="3 4"/>
+
+      <!-- Hour labels -->
+      <text x="60" y="50" fill="#8a94a8" font-size="10" font-family="system-ui">8 AM</text>
+      <text x="265" y="50" fill="#8a94a8" font-size="10" font-family="system-ui">11 AM</text>
+      <text x="470" y="50" fill="#8a94a8" font-size="10" font-family="system-ui">2 PM</text>
+      <text x="675" y="50" fill="#8a94a8" font-size="10" font-family="system-ui">5 PM</text>
+
+      <!-- Time blocks -->
+      <!-- Morning triage 8-9 -->
+      <rect x="60" y="80" width="80" height="50" fill="rgba(0,229,255,0.20)" stroke="#00e5ff" stroke-width="1.5" rx="6"/>
+      <text x="100" y="100" fill="#00e5ff" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">Triage</text>
+      <text x="100" y="115" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">Categorize</text>
+      <text x="100" y="125" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">backlog (20m)</text>
+
+      <!-- Tier 1 burst 9-11 -->
+      <rect x="155" y="80" width="180" height="50" fill="rgba(16,185,129,0.20)" stroke="#10b981" stroke-width="1.5" rx="6"/>
+      <text x="245" y="100" fill="#10b981" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">Tier 1 Burst</text>
+      <text x="245" y="115" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">~50 tickets · AI-assisted</text>
+      <text x="245" y="125" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">templates + personalization</text>
+
+      <!-- Tier 2 deep work 11-1 -->
+      <rect x="350" y="80" width="160" height="50" fill="rgba(245,158,11,0.20)" stroke="#f59e0b" stroke-width="1.5" rx="6"/>
+      <text x="430" y="100" fill="#f59e0b" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">Tier 2 Deep Work</text>
+      <text x="430" y="115" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">~25 tickets · diagnostic</text>
+      <text x="430" y="125" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">repro + judgment calls</text>
+
+      <!-- Escalation handoffs -->
+      <rect x="525" y="80" width="120" height="50" fill="rgba(239,68,68,0.20)" stroke="#ef4444" stroke-width="1.5" rx="6"/>
+      <text x="585" y="100" fill="#ef4444" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">Tier 3 Handoffs</text>
+      <text x="585" y="115" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">structured bug reports</text>
+      <text x="585" y="125" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">to engineering</text>
+
+      <!-- Afternoon tier 1 burst -->
+      <rect x="660" y="80" width="100" height="50" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5" rx="6"/>
+      <text x="710" y="100" fill="#10b981" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">Tier 1 (PM)</text>
+      <text x="710" y="115" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">~40 tickets</text>
+
+      <!-- KB + Report -->
+      <rect x="775" y="80" width="80" height="50" fill="rgba(168,85,247,0.20)" stroke="#a855f7" stroke-width="1.5" rx="6"/>
+      <text x="815" y="100" fill="#a855f7" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">KB +</text>
+      <text x="815" y="113" fill="#a855f7" font-size="10" font-family="system-ui" text-anchor="middle" font-weight="600">Report</text>
+      <text x="815" y="125" fill="#fff" font-size="9" font-family="system-ui" text-anchor="middle">EOD wrap</text>
+
+      <!-- Output row -->
+      <text x="40" y="200" fill="#8a94a8" font-size="11" font-family="system-ui">Outputs</text>
+
+      <!-- Output boxes -->
+      <rect x="60" y="215" width="180" height="35" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" rx="6"/>
+      <text x="150" y="237" fill="#fff" font-size="10" font-family="system-ui" text-anchor="middle">~90 tickets resolved (Tier 1 + 2)</text>
+
+      <rect x="260" y="215" width="160" height="35" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" rx="6"/>
+      <text x="340" y="237" fill="#fff" font-size="10" font-family="system-ui" text-anchor="middle">3-5 KB articles updated</text>
+
+      <rect x="440" y="215" width="160" height="35" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" rx="6"/>
+      <text x="520" y="237" fill="#fff" font-size="10" font-family="system-ui" text-anchor="middle">2-4 P-bugs escalated cleanly</text>
+
+      <rect x="620" y="215" width="180" height="35" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" rx="6"/>
+      <text x="710" y="237" fill="#fff" font-size="10" font-family="system-ui" text-anchor="middle">Daily report sent to stakeholders</text>
+
+      <!-- KPI targets row -->
+      <text x="40" y="290" fill="#8a94a8" font-size="11" font-family="system-ui">Daily KPI targets</text>
+
+      <text x="60" y="320" fill="#00e5ff" font-size="11" font-family="system-ui" font-weight="600">CSAT &gt; 90%</text>
+      <text x="200" y="320" fill="#10b981" font-size="11" font-family="system-ui" font-weight="600">FRT &lt; 5 min</text>
+      <text x="340" y="320" fill="#f59e0b" font-size="11" font-family="system-ui" font-weight="600">ART &lt; 2 hr</text>
+      <text x="480" y="320" fill="#a855f7" font-size="11" font-family="system-ui" font-weight="600">SLA &gt; 95%</text>
+      <text x="620" y="320" fill="#ef4444" font-size="11" font-family="system-ui" font-weight="600">Backlog growth &lt; 0</text>
+    </svg>
+  </div>
+
+  <div class="metrics-grid" style="margin-top: 22px;">
+    <div class="glass metric cyan">
+      <div class="label">Daily throughput</div>
+      <div class="value">130 <span class="unit">tickets</span></div>
+      <div class="delta">↑ baseline for this workflow</div>
+    </div>
+    <div class="glass metric green">
+      <div class="label">CSAT target</div>
+      <div class="value">90<span class="unit">%+</span></div>
+      <div class="delta">human-curated, not AI-blasted</div>
+    </div>
+    <div class="glass metric amber">
+      <div class="label">First response time</div>
+      <div class="value">&lt;5 <span class="unit">min</span></div>
+      <div class="delta">tier 1 with AI assist</div>
+    </div>
+    <div class="glass metric purple">
+      <div class="label">Bilingual coverage</div>
+      <div class="value">EN<span class="unit"> ↔ </span>ES</div>
+      <div class="delta">native, no translation lag</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. KB STRUCTURE -->
+<section>
+  <h2><span class="num">5</span>Knowledge Base Structure</h2>
+  <p class="section-lead">When 5 tickets show the same problem, that's a KB article waiting to be written. Here's how I organize what the AI knows so it draws from the right source.</p>
+  <div class="kb-grid">
+    <div class="glass kb-card">
+      <h4>Getting Started</h4>
+      <div class="count">~15 articles</div>
+      <ul>
+        <li>Account setup walkthrough</li>
+        <li>First 5 things to configure</li>
+        <li>Onboarding common questions</li>
+        <li>Plan comparison &amp; what's included</li>
+      </ul>
+    </div>
+    <div class="glass kb-card">
+      <h4>Billing &amp; Plans</h4>
+      <div class="count">~12 articles</div>
+      <ul>
+        <li>How billing cycles work</li>
+        <li>Prorated charges explained</li>
+        <li>Refund policy &amp; timeline</li>
+        <li>Tax invoices (US, EU, MX, AR)</li>
+      </ul>
+    </div>
+    <div class="glass kb-card">
+      <h4>Integrations</h4>
+      <div class="count">~20 articles</div>
+      <ul>
+        <li>Setup guides per integration</li>
+        <li>Troubleshooting connection errors</li>
+        <li>API key management</li>
+        <li>Webhook configuration patterns</li>
+      </ul>
+    </div>
+    <div class="glass kb-card">
+      <h4>Troubleshooting</h4>
+      <div class="count">~25 articles</div>
+      <ul>
+        <li>Top 10 known issues + workarounds</li>
+        <li>Browser-specific behaviors</li>
+        <li>Performance optimization</li>
+        <li>Data sync delays explained</li>
+      </ul>
+    </div>
+    <div class="glass kb-card">
+      <h4>Security &amp; Privacy</h4>
+      <div class="count">~10 articles</div>
+      <ul>
+        <li>Data export &amp; deletion (GDPR)</li>
+        <li>SSO setup walkthroughs</li>
+        <li>Audit log access</li>
+        <li>Compliance posture</li>
+      </ul>
+    </div>
+    <div class="glass kb-card">
+      <h4>Bilingual EN/ES</h4>
+      <div class="count">Every article — 2 versions</div>
+      <ul>
+        <li>EN: technical/concise</li>
+        <li>ES: Mexican Spanish, culturally adapted</li>
+        <li>Voice/tone consistency across both</li>
+        <li>Updated synchronously</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6. QUALITY CONTROL -->
+<section>
+  <h2><span class="num">6</span>Quality Control at Volume</h2>
+  <p class="section-lead">How I keep CSAT above 90% even when handling 130+ tickets a day. Volume without quality is just noise — these are the guardrails.</p>
+  <ul class="qc-list">
+    <li class="glass">
+      <span class="check">✓</span>
+      <div><strong>Every AI draft reviewed before send.</strong> No auto-send, no exceptions. Even on the simplest tier 1 tickets, the response gets a human read for tone, context, and accuracy.</div>
+    </li>
+    <li class="glass">
+      <span class="check">✓</span>
+      <div><strong>Personalization layer mandatory.</strong> AI gives the structure, I add the customer's name, the specific detail they mentioned, and the tonal cue (formal/casual/empathetic depending on their message).</div>
+    </li>
+    <li class="glass">
+      <span class="check">✓</span>
+      <div><strong>Weekly CSAT audit.</strong> Pull all 1-3 star ratings, read the customer's full conversation, identify what the response missed. Update templates and KB based on findings.</div>
+    </li>
+    <li class="glass">
+      <span class="check">✓</span>
+      <div><strong>"Sounds like a robot" filter.</strong> If the AI draft starts with "Thank you for reaching out!" or any other generic AI-tell, I rewrite the opening. Real humans don't open emails like that.</div>
+    </li>
+    <li class="glass">
+      <span class="check">✓</span>
+      <div><strong>Escalation completeness check.</strong> Before any handoff to engineering: repro steps clear, environment specified, customer impact documented, workaround tested. No "FYI broken" tickets.</div>
+    </li>
+    <li class="glass">
+      <span class="check">✓</span>
+      <div><strong>Voice consistency across EN/ES.</strong> Same brand tone in both languages. No machine-translated Spanish — I write the Spanish version with native judgment, not a Google Translate output.</div>
+    </li>
+  </ul>
+</section>
+
+<!-- CLOSING -->
+<section>
+  <div class="closing">
+    <h3>This is how I run support.</h3>
+    <p>If you're scaling a SaaS or AI product and need a CS lead who treats AI as a tool — not a replacement for judgment — let's talk. I can ramp on your stack (Zendesk, Intercom, Help Scout, Front) in days, not weeks.</p>
+    <div class="contact">Carlos Juárez · Bilingual CS Lead · EN↔ES · U.S. time zones</div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-target');
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.template-pair').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
